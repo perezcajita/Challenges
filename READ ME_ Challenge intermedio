@@ -1,0 +1,100 @@
+# Análisis de Calidad del Vino con Spark ML y Visualización 3D
+
+## Descripción
+Este proyecto analiza dos datasets de vinos (tinto y blanco) para predecir su calidad utilizando modelos de regresión logística. Además, se genera una visualización 3D interactiva con un hiperplano de decisión para interpretar el comportamiento del modelo combinado.
+
+## Estructura del repositorio
+- `wine_quality_red.ipynb`: Modelo para vino tinto (`quality >= 6`)
+- `wine_quality_white.ipynb`: Modelo para vino blanco (`quality >= 7`)
+- `wine_quality_combined.ipynb`: Visualización 3D con datos combinados
+- `README.md`: Informe y documentación del proyecto
+
+## Metodología
+- Carga y limpieza de datos
+- Definición de variable objetivo (`label`)
+- Entrenamiento de modelos con Spark ML y scikit-learn
+- Evaluación con métricas de clasificación
+- Visualización de resultados
+
+---
+
+## Interpretación de los Modelos
+
+### 1. Modelo de Vino Tinto (`winequality-red.csv`)
+
+**Definición de calidad:**  
+Se consideró que un vino tinto es de buena calidad si su calificación es **mayor o igual a 6**.
+
+**Resultados clave:**
+- **Exactitud del modelo:** ~0.83  
+  El modelo logra clasificar correctamente aproximadamente el 83% de los vinos en el conjunto de prueba.
+- **Distribución de clases:**  
+  La proporción entre vinos de buena y mala calidad fue relativamente equilibrada, lo que favoreció el aprendizaje del modelo.
+- **Variables relevantes:**  
+  Características como `alcohol`, `sulphates` y `citric acid` mostraron correlaciones positivas con la calidad del vino.
+
+**Interpretación:**  
+El modelo logró una buena capacidad predictiva, beneficiado por una definición de calidad más inclusiva y una distribución de clases más balanceada. Esto permitió al modelo aprender patrones representativos sin sesgos marcados.
+
+---
+
+### 2. Modelo de Vino Blanco (`winequality-white.csv`)
+
+**Definición de calidad:**  
+Se consideró que un vino blanco es de buena calidad si su calificación es **mayor o igual a 7**, un criterio más estricto.
+
+**Resultados clave:**
+- **Exactitud del modelo:** ~0.78 (estimado)  
+  El rendimiento fue ligeramente menor que en el modelo de vino tinto, en parte debido al desbalance de clases.
+- **Distribución de clases:**  
+  La mayoría de los vinos fueron clasificados como de calidad media o baja, lo que generó un conjunto desbalanceado.
+- **Variables relevantes:**  
+  `Alcohol` volvió a ser un predictor fuerte, junto con `residual sugar` y `density`.
+
+**Interpretación:**  
+El modelo enfrentó mayor dificultad para identificar vinos de alta calidad debido a la menor cantidad de ejemplos positivos. Aun así, logró capturar patrones útiles, aunque con menor sensibilidad.
+
+---
+
+### 3. Modelo Combinado (Tinto + Blanco)
+
+**Objetivo:**  
+Explorar visualmente cómo un modelo de regresión logística separa vinos de buena y mala calidad usando solo tres variables: `alcohol`, `volatile acidity` y `density`.
+
+**Resultados clave:**
+- **Visualización 3D interactiva:**  
+  Se generó una gráfica 3D con un hiperplano de decisión, lo que permitió observar cómo el modelo separa las clases en el espacio tridimensional.
+- **Modelo simplificado:**  
+  Aunque se usaron solo tres variables, el modelo logró una separación parcial entre clases, evidenciando que estas características tienen un peso importante en la calidad del vino.
+
+**Interpretación:**  
+Este modelo no busca maximizar la precisión, sino ofrecer una representación visual intuitiva del comportamiento del clasificador. El plano de decisión mostró que los vinos con mayor `alcohol` y menor `acidez volátil` tienden a clasificarse como de mejor calidad.
+
+---
+
+##  Conclusión General
+
+- La **regresión logística** demostró ser una herramienta eficaz para tareas de clasificación binaria en este contexto.
+- La **definición del umbral de calidad** influye directamente en el balance de clases y, por tanto, en el rendimiento del modelo.
+- La **visualización 3D** aporta valor interpretativo, permitiendo comunicar de forma clara cómo el modelo toma decisiones.
+
+Este análisis ofrece una base sólida para futuras mejoras, como:
+- Probar modelos más complejos (árboles de decisión, random forest, SVM)
+- Aplicar técnicas de balanceo de clases (undersampling, oversampling, SMOTE)
+- Incorporar más variables o realizar selección automática de características
+- Evaluar métricas adicionales como F1-score, precisión y recall
+
+---
+
+## Herramientas utilizadas
+- Apache Spark ML
+- scikit-learn
+- pandas
+- matplotlib
+- plotly
+- Databricks Community Edition
+
+## Autor
+**Javier Pérez**  
+Maestría en Ciencia de los Datos  
+CUCEA — Universidad de Guadalajara
